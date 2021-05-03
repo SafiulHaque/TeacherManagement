@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.safi.TeacherManagement.Models.Teacher;
 import com.safi.TeacherManagement.Repositories.TeacherRepository;
 
-@RestController
+//@RestController
 public class AppController {
 	@Autowired
 	TeacherRepository repo;
@@ -36,14 +37,15 @@ public class AppController {
 		return "AddTeacher";
 	}
 	
-	@RequestMapping(value="/addNew",method=RequestMethod.GET,consumes=MediaType.APPLICATION_JSON_VALUE,produces="application/json")
+	@GetMapping("/addNew")
 	public 
 //	String 
 	Teacher addNewTeacher(@RequestBody Teacher teacher
 		//	,Model model
 			) {
-		repo.save(teacher);
-		int highest_id=repo.getHighestId();
+		Teacher current_teacher=repo.save(teacher);
+		int highest_id=current_teacher.gettId();
+	//	int highest_id=repo.getHighestId();
 		System.out.println("Highest Id => "+highest_id);
 	//	model.addAttribute("id",(highest_id+1));
 	//	return "AddTeacher";
@@ -55,7 +57,7 @@ public class AppController {
 		return "ShowOneDetails";
 	}
 	
-	@RequestMapping(value="/details/{id}",method=RequestMethod.GET,produces="application/json")
+	@GetMapping(value="/details/{id}")
 //	@ResponseBody
 	public 
 //	ModelAndView 
@@ -82,7 +84,7 @@ public class AppController {
 		return "ShowOneDetails";
 	}
 	
-	@RequestMapping(value="/remove/{id}")
+	@PostMapping(value="/remove/{id}")
 //	@ResponseBody
 	public String remove(//@RequestParam 
 			@PathVariable("id") int tid) {
@@ -97,7 +99,7 @@ public class AppController {
 		
 	}
 	
-	@RequestMapping(value="/showAll")
+	@PostMapping(value="/showAll")
 //	@ResponseBody
 	public String showAllTeachers(Model model) {
 	//	List<Teacher> teachers=repo.getAllDetails();
@@ -113,7 +115,7 @@ public class AppController {
 		return names+"\n"+subjects;
 	}
 	
-	@RequestMapping(value="/count")
+	@PostMapping(value="/count")
 //	@ResponseBody
 	public 
 //	long 
