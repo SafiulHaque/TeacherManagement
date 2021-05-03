@@ -12,6 +12,8 @@ public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
 	@Query(value="SELECT MAX(TID) FROM Teacher", nativeQuery = true)
 	public int getHighestId();
 	
-	@Query(value="SELECT * FROM Teacher", nativeQuery = true)
-	public List<Teacher> getAllDetails();
+	/*
+	 * @Query(value="SELECT * FROM Teacher", nativeQuery = true) public
+	 * List<Teacher> getAllDetails();
+	 */
 }
